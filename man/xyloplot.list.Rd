@@ -4,12 +4,17 @@
 \alias{xyloplot.list}
 \title{Function for creating multiple xyloplots sharing a y-axis from lists of numeric vectors}
 \usage{
-\method{xyloplot}{list}(x, ylim = range(unlist(x, use.names = FALSE)),
-  breaks = 30, space = 0.1, ylab = "Value", xlab = "Frequency density",
-  ...)
+\method{xyloplot}{list}(x, discrete = !is.numeric(unlist(x, use.names =
+  FALSE)), ylim = if (discrete) c(0.5, length(levels(factor(unlist(x,
+  use.names = FALSE)))) + 0.5) else range(unlist(x, use.names = FALSE)),
+  breaks = if (discrete) seq(from = 0.5, by = 1, length.out =
+  length(levels(factor(unlist(x, use.names = FALSE)))) + 1) else 30,
+  space = 0.1, ylab = "Value", xlab = "Frequency density", ...)
 }
 \arguments{
 \item{x}{List of numeric vectors of values.}
+
+\item{discrete}{Logical value indicating whether to treat values as discrete (suitable for character vectors and factors) or continuous (suitable for numeric vectors).}
 
 \item{ylim}{Limits of hte y-axis.}
 

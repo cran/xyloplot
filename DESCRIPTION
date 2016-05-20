@@ -1,8 +1,8 @@
 Package: xyloplot
 Type: Package
 Title: A Method for Creating Xylophone-Like Frequency Density Plots
-Version: 1.0
-Date: 2016-03-23
+Version: 1.1
+Date: 2016-05-20
 Author: Daniel Greene
 Maintainer: Daniel Greene <dg333@cam.ac.uk>
 Description: A method for creating vertical histograms sharing a y-axis using
@@ -10,6 +10,6 @@ Description: A method for creating vertical histograms sharing a y-axis using
 License: GPL (>= 2)
 RoxygenNote: 5.0.1
 NeedsCompilation: no
-Packaged: 2016-03-24 03:50:04 UTC; dg333
+Packaged: 2016-05-20 12:14:25 UTC; dg333
 Repository: CRAN
-Date/Publication: 2016-03-25 00:53:25
+Date/Publication: 2016-05-20 22:37:11

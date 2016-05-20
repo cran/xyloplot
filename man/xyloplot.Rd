@@ -7,12 +7,12 @@
 xyloplot(x, ...)
 }
 \arguments{
-\item{x}{Numeric vector or list of numeric vectors to use for creating xyloplots.}
+\item{x}{Vector or list of vectors to use for creating xyloplots.}
 
 \item{...}{Other arguments to be passed to \code{\link{xyloplot.list}} and \code{plot}.}
 }
 \description{
-Method for creating xyloplots
+Plots xylophone(s) for the input vector(s), provided either as a single vector or list of vectors. Either numeric vectors or character vectors/factors are admissible. If numeric vectors are provided, \code{cut} will be used to aggregate values, whereas if character vectors or factors are provided, each 'level' will get it's own 'key'. Note, that the height of the plot/length of the level labels may need adjusting to fit.
 }
 \examples{
 xyloplot(rnorm(1000))
@@ -21,6 +21,13 @@ xyloplot(
  breaks=20,
  col=rainbow(3), 
  main="title")
+xyloplot(
+ replicate(n=5, simplify=FALSE, 
+  expr=factor(sample(c(0.01, 0.1, 0.2, 0.25, 0.5, 1), size=10, replace=TRUE))), 
+ col=rainbow(5))
+xyloplot(
+ sample(c("goldfish","cat","dog","fish","mouse","giraffe"), 
+ size=100, replace=TRUE))
 }
 \seealso{
 xyloplot.list xyloplot.numeric
