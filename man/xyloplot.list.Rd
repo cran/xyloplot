@@ -5,10 +5,11 @@
 \title{Function for creating multiple xyloplots sharing a y-axis from lists of numeric vectors}
 \usage{
 \method{xyloplot}{list}(x, discrete = !is.numeric(unlist(x, use.names =
-  FALSE)), ylim = if (discrete) c(0.5, length(levels(factor(unlist(x,
-  use.names = FALSE)))) + 0.5) else range(unlist(x, use.names = FALSE)),
-  breaks = if (discrete) seq(from = 0.5, by = 1, length.out =
-  length(levels(factor(unlist(x, use.names = FALSE)))) + 1) else 30,
+  FALSE)), breaks = if (discrete) seq(from = 0.5, by = 1, length.out =
+  length(levels(factor(unlist(x, use.names = FALSE)))) + 1) else 30, ylim = if
+  (discrete) {     range(breaks) } else {     if (length(breaks) == 1)         
+  range(unlist(x, use.names = FALSE)) + c(-1, 1) * diff(range(unlist(x,
+  use.names = FALSE)))/((breaks - 1) * 2)     else range(breaks) },
   space = 0.1, ylab = "Value", xlab = "Frequency density", ...)
 }
 \arguments{
@@ -16,9 +17,9 @@
 
 \item{discrete}{Logical value indicating whether to treat values as discrete (suitable for character vectors and factors) or continuous (suitable for numeric vectors).}
 
-\item{ylim}{Limits of hte y-axis.}
-
 \item{breaks}{A single positive integer value giving the number of histogram classes to evenly split the values in \code{x} into, or a numeric vector explicitly giving the boundaries of the histogram classes.}
+
+\item{ylim}{Limits of hte y-axis.}
 
 \item{space}{The proportion of the total distance on the x-axis allocated to each 'xylophone' which should be left blank.}
 

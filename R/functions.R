@@ -1,3 +1,11 @@
+#' Get x-axis positions of \code{n} xylophones
+#'
+#' @param n Number of xylophones
+#' @export
+xylo_positions <- function(n) {
+	seq(from=1/2/n,by=1/n,length.out=n)
+}
+
 #' Method for creating xyloplots
 #'
 #' Plots xylophone(s) for the input vector(s), provided either as a single vector or list of vectors. Either numeric vectors or character vectors/factors are admissible. If numeric vectors are provided, \code{cut} will be used to aggregate values, whereas if character vectors or factors are provided, each 'level' will get it's own 'key'. Note, that the height of the plot/length of the level labels may need adjusting to fit.
@@ -73,28 +81,31 @@ xyloplot.numeric <- function(x, ...) {
 #' @method xyloplot list
 #' @export
 #' @importFrom graphics axis box plot rect title par strwidth text
-xyloplot.list <- function(x, discrete=!is.numeric(unlist(x, use.names=FALSE)), ylim=if (discrete) c(0.5, length(levels(factor(unlist(x, use.names=FALSE))))+0.5) else range(unlist(x, use.names=FALSE)), breaks=if (discrete) seq(from=0.5, by=1, length.out=length(levels(factor(unlist(x, use.names=FALSE))))+1) else 30, space=0.1, ylab="Value", xlab="Frequency density", ...) { 
-	stopifnot(length(breaks) > 1 | (length(breaks) == 1 & breaks > 1))
-	stopifnot(discrete | is.numeric(unlist(use.names=FALSE, x)))
-	if (!discrete) stopifnot(diff(range(unlist(use.names=FALSE, x)))>0)
+xyloplot.list <- function(x, discrete=!is.numeric(unlist(x, use.names=FALSE)), breaks=if (discrete) seq(from=0.5, by=1, length.out=length(levels(factor(unlist(x, use.names=FALSE))))+1) else 30, ylim=if (discrete) { range(breaks) } else { if (length(breaks) == 1) range(unlist(x, use.names=FALSE)) + c(-1, 1) * diff(range(unlist(x, use.names=FALSE)))/((breaks-1)*2) else range(breaks) }, space=0.1, ylab="Value", xlab="Frequency density", ...) { 
 
-	brk.pts <- if (length(breaks) == 1) seq(from=ylim[1], to=ylim[2], length.out=breaks) else breaks
+	unlisted <- unlist(x, use.names=FALSE)
+
+	stopifnot(length(breaks) > 1 | (length(breaks) == 1 & breaks > 1 & (breaks - floor(breaks)) == 0))
+	stopifnot(discrete | is.numeric(unlisted))
+	if (!discrete) stopifnot(diff(range(unlisted))>0)
+
+	brk.pts <- if (length(breaks) == 1) seq(from=ylim[1], by=diff(range(ylim))/breaks, length.out=breaks+1) else breaks
 	
-	blks <- lapply(FUN=function(x) as.array(table(x)/length(x)), X=lapply(if (discrete) lapply(x, function(xyl) as.integer(factor(xyl, levels=levels(factor(unlist(x, use.names=FALSE)))))) else x, cut, breaks=brk.pts, right=FALSE))
+	blks <- lapply(FUN=function(x) as.array(table(x)/length(x)), X=lapply(if (discrete) lapply(x, function(xyl) as.integer(factor(xyl, levels=levels(factor(unlisted))))) else x, cut, breaks=brk.pts, right=FALSE))
 
 	if (discrete) {
 		inches_to_lines <- ( par("mar") / par("mai") )[1]
 		old_mar <- par("mar")
 		on.exit(par(mar=old_mar))
-		add_w <- max(strwidth(levels(factor(unlist(x, use.names=FALSE))), units="inches")) * inches_to_lines
+		add_w <- max(strwidth(levels(factor(unlisted)), units="inches")) * inches_to_lines
 		par(mar=ifelse(1:4 == 2, 3 + add_w, old_mar))
 	}
 
-	plot(x=NULL, xlim=0:1, xaxs="i", yaxs="i", xlab="", ylab="", ylim=if (is.null(ylim)) range(brk.pts) else ylim, axes=FALSE, ...)
+	plot(x=NULL, xlim=0:1, xaxs="i", yaxs="i", xlab="", ylab="", ylim=ylim, axes=FALSE, ...)
 
 	violin.width <- (1-space)/length(x)
 
-	pivots <- seq(from=1/2/length(x),by=1/length(x),length.out=length(x))
+	pivots <- xylo_positions(length(x))
 	ord <- as.integer(t(matrix(1:(length(x) * (length(brk.pts)-1)), nrow=length(brk.pts)-1,ncol=length(x))))
 
 	rect(
@@ -116,7 +127,7 @@ xyloplot.list <- function(x, discrete=!is.numeric(unlist(x, use.names=FALSE)), y
 
 	if (discrete) {
 		axis(side=2, at=brk.pts[-1]-0.5, labels=FALSE)
-		text(y=brk.pts[-1]-0.5, x=0, pos=2, offset=1, xpd=TRUE, labels=levels(factor(unlist(x, use.names=FALSE))))
+		text(y=brk.pts[-1]-0.5, x=0, pos=2, offset=1, xpd=TRUE, labels=levels(factor(unlisted)))
 		title(ylab=ylab, line=2+add_w)
 	} else {
 		axis(side=2)

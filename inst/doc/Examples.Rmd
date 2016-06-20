@@ -1,0 +1,57 @@
+---
+title: "Xyloplot examples"
+author: "Daniel Greene"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Examples}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+```{r echo=FALSE}
+knitr::opts_chunk$set(dev="svg", fig.width=7, fig.height=5)
+library(xyloplot)
+set.seed(1)
+```
+
+The `xyloplot` function displays continuous or discrete data as histogram style violin plots, or "xylophones".
+
+`xyloplot` accepts a simple numeric vector...
+```{r}
+xyloplot(rnorm(1000))
+```
+
+... or a list of simple numeric vectors...
+```{r}
+xyloplot(
+ x=lapply(1:3, function(mean) rnorm(mean=mean, n=1000)), 
+ breaks=20,
+ col=rainbow(3), 
+ main="title")
+```
+
+... or discrete numeric data (supplied as a factor)...
+```{r}
+xyloplot(
+ replicate(n=5, simplify=FALSE, 
+  expr=factor(sample(c(0.01, 0.1, 0.2, 0.25, 0.5, 1), size=10, replace=TRUE))), 
+ col=rainbow(5))
+```
+
+... or general factors with wordy levels...
+```{r}
+xyloplot(
+ sample(c("goldfish","cat","dog","fish","mouse","giraffe"), 
+ size=100, replace=TRUE))
+```
+
+The `xylo_positions` function gives you the x-coordinates of the centres of the xylophones in case you want to add further graphical objects. For example, here we'll add the upper quartile as a red line for samples from 3 normal distributions.
+
+```{r}
+data <- lapply(1:3, function(mean) rnorm(mean=mean, n=1000))
+xyloplot(x=data)
+n <- length(data)
+positions <- xylo_positions(n)
+upper_qs <- sapply(data, function(sample) quantile(sample, prob=0.75))
+segments(x0=positions-1/n/2, x1=positions+1/n/2, y0=upper_qs, y1=upper_qs, col="red", pch=19)
+```
