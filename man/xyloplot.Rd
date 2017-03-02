@@ -4,15 +4,17 @@
 \alias{xyloplot}
 \title{Method for creating xyloplots}
 \usage{
-xyloplot(x, ...)
+xyloplot(x, rhs = NULL, ...)
 }
 \arguments{
 \item{x}{Vector or list of vectors to use for creating xyloplots.}
 
+\item{rhs}{If not \code{NULL}, causes \code{xyloplot} to split xylophones and forms the distribution(s) for right hand side xylphones, complementary to the left hand side ones reflecting \code{x}.}
+
 \item{...}{Other arguments to be passed to \code{\link{xyloplot.list}} and \code{plot}.}
 }
 \description{
-Plots xylophone(s) for the input vector(s), provided either as a single vector or list of vectors. Either numeric vectors or character vectors/factors are admissible. If numeric vectors are provided, \code{cut} will be used to aggregate values, whereas if character vectors or factors are provided, each 'level' will get it's own 'key'. Note, that the height of the plot/length of the level labels may need adjusting to fit.
+Plots xylophone(s) [essentially vertical histograms] for the input vector(s), provided either as a single vector or list of vectors. Either numeric vectors or character vectors/factors are admissible. If numeric vectors are provided, \code{cut} will be used to aggregate values, whereas if character vectors or factors are provided, each 'level' will get it's own `key'. Note, that the height of the plot/length of the level labels may need adjusting to fit. A second vector or list of vectors can be provided as the \code{rhs} argument. If so, `split' xyloplots are created, with the left hand sides corresponding to distributions in \code{x} and right hand sides corresponding to distributions in \code{rhs}. Note that if \code{rhs} is not null, it must have the same class as \code{x}, and if it is a \code{list}, it must be the same length as \code{x} and it's elements must be the same class as those in \code{x}.
 }
 \examples{
 xyloplot(rnorm(1000))

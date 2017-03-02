@@ -4,16 +4,19 @@
 \alias{xyloplot.list}
 \title{Function for creating multiple xyloplots sharing a y-axis from lists of numeric vectors}
 \usage{
-\method{xyloplot}{list}(x, discrete = !is.numeric(unlist(x, use.names =
-  FALSE)), breaks = if (discrete) seq(from = 0.5, by = 1, length.out =
-  length(levels(factor(unlist(x, use.names = FALSE)))) + 1) else 30, ylim = if
-  (discrete) {     range(breaks) } else {     if (length(breaks) == 1)         
-  range(unlist(x, use.names = FALSE)) + c(-1, 1) * diff(range(unlist(x,
-  use.names = FALSE)))/((breaks - 1) * 2)     else range(breaks) },
-  space = 0.1, ylab = "Value", xlab = "Frequency density", ...)
+\method{xyloplot}{list}(x, rhs = NULL, discrete = !is.numeric(unlist(c(x,
+  rhs), use.names = FALSE)), breaks = if (discrete) seq(from = 0.5, by = 1,
+  length.out = length(levels(factor(unlist(c(x, rhs), use.names = FALSE)))) + 1)
+  else 30, ylim = if (discrete) {     range(breaks) } else {     if
+  (length(breaks) == 1)          range(unlist(c(x, rhs), use.names = FALSE)) +
+  c(-1, 1) * diff(range(unlist(c(x, rhs), use.names = FALSE)))/((breaks - 1) *
+  2)     else range(breaks) }, space = 0.1, ylab = "Value",
+  xlab = "Frequency density", ...)
 }
 \arguments{
 \item{x}{List of numeric vectors of values.}
+
+\item{rhs}{If not \code{NULL}, causes \code{xyloplot} to split xylophones and forms the distribution(s) for right hand side xylphones, complementary to the left hand side ones reflecting \code{x}.}
 
 \item{discrete}{Logical value indicating whether to treat values as discrete (suitable for character vectors and factors) or continuous (suitable for numeric vectors).}
 

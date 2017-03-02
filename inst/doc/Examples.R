@@ -32,3 +32,7 @@ positions <- xylo_positions(n)
 upper_qs <- sapply(data, function(sample) quantile(sample, prob=0.75))
 segments(x0=positions-1/n/2, x1=positions+1/n/2, y0=upper_qs, y1=upper_qs, col="red", pch=19)
 
+## ------------------------------------------------------------------------
+data_rhs <- lapply(2:4, function(mean) rnorm(mean=mean, sd=2, n=1000))
+xyloplot(x=data, rhs=data_rhs, col=rainbow(2))
+

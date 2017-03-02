@@ -4,10 +4,12 @@
 \alias{xyloplot.character}
 \title{Function for creating xyloplots from character vectors}
 \usage{
-\method{xyloplot}{character}(x, ...)
+\method{xyloplot}{character}(x, rhs = NULL, ...)
 }
 \arguments{
 \item{x}{Character vector of values.}
+
+\item{rhs}{If not \code{NULL}, causes \code{xyloplot} to split xylophones and forms the distribution(s) for right hand side xylphones, complementary to the left hand side ones reflecting \code{x}.}
 
 \item{...}{Other arguments passed to \code{\link{xyloplot.list}}.}
 }

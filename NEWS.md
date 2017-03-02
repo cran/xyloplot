@@ -1,3 +1,7 @@
+# xyloplot 1.5
+
+Add `rhs` argument which, if specified, splits xyloplots in the middle, with left hand side distribution given by `x` and right hand side by `rhs`.
+
 # xyloplot 1.3
 
 Added 'Examples' vignette and `xylo_positions` function which lets you get the positions of the xylophones lest the user wants to add more graphical objects to the plot.

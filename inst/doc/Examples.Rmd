@@ -55,3 +55,12 @@ positions <- xylo_positions(n)
 upper_qs <- sapply(data, function(sample) quantile(sample, prob=0.75))
 segments(x0=positions-1/n/2, x1=positions+1/n/2, y0=upper_qs, y1=upper_qs, col="red", pch=19)
 ```
+
+`xyloplot` also accepts an `rhs` argument, causing the xylophones to split in the middle, and plotting left hand side distributions `x` and right hand side ones from `rhs`.
+
+```{r}
+data_rhs <- lapply(2:4, function(mean) rnorm(mean=mean, sd=2, n=1000))
+xyloplot(x=data, rhs=data_rhs, col=rainbow(2))
+```
+
+Note that graphical options, e.g. `col`, are recycled over the distributions going from left to right, regardless of whether they are lhs or rhs.
