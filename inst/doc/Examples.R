@@ -33,6 +33,13 @@ upper_qs <- sapply(data, function(sample) quantile(sample, prob=0.75))
 segments(x0=positions-1/n/2, x1=positions+1/n/2, y0=upper_qs, y1=upper_qs, col="red", pch=19)
 
 ## ------------------------------------------------------------------------
-data_rhs <- lapply(2:4, function(mean) rnorm(mean=mean, sd=2, n=1000))
+data_rhs <- lapply(2:4, function(mean) rnorm(mean=mean, sd=2, n=2000))
 xyloplot(x=data, rhs=data_rhs, col=rainbow(2))
+
+## ------------------------------------------------------------------------
+lhs <- rnorm(n=1000)
+rhs <- rnorm(n=2000)
+par(mfrow=c(1, 2))
+xyloplot(main="freq=FALSE", x=lhs, rhs=rhs, col=rainbow(2), freq=FALSE)
+xyloplot(main="freq=TRUE", x=lhs, rhs=rhs, col=rainbow(2), freq=TRUE)
 

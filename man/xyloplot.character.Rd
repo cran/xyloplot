@@ -19,4 +19,3 @@ Function for creating xyloplots from character vectors
 \seealso{
 xyloplot.list
 }
-

@@ -87,6 +87,7 @@ xyloplot.numeric <- function(x, rhs=NULL, ...) {
 #' @param space The proportion of the total distance on the x-axis allocated to each 'xylophone' which should be left blank.
 #' @param ylab Label for y-axis.
 #' @param xlab Label for x-axis.
+#' @param freq Logical value. If \code{TRUE}, the frequencies/counts of data points falling in each interval are represented. If \code{FALSE} (default), the frequency density of data points in each interval are represented.
 #' @param ... Other arguments to be passed to \code{\link{plot}}.
 #' @method xyloplot list
 #' @export
@@ -99,7 +100,8 @@ xyloplot.list <- function(
 	ylim=if (discrete) { range(breaks) } else { if (length(breaks) == 1) range(unlist(c(x, rhs), use.names=FALSE)) + c(-1, 1) * diff(range(unlist(c(x, rhs), use.names=FALSE)))/((breaks-1)*2) else range(breaks) }, 
 	space=0.1, 
 	ylab="Value", 
-	xlab="Frequency density", 
+	xlab=if (freq) "Frequency" else "Frequency density", 
+	freq=FALSE,
 	...
 ) { 
 
@@ -135,7 +137,7 @@ xyloplot.list <- function(
 	pivots <- xylo_positions(length(x))
 	ord <- as.integer(t(matrix(1:(length(x) * (length(brk.pts)-1)), nrow=length(brk.pts)-1,ncol=length(x))))
 
-	make_blocks <- function(x) lapply(FUN=function(x) as.array(table(x)/length(x)), X=lapply(if (discrete) lapply(x, function(xyl) as.integer(factor(xyl, levels=levels(factor(unlisted))))) else x, cut, breaks=brk.pts, right=FALSE))
+	make_blocks <- function(x) lapply(FUN=function(x) as.array(table(x)/(if (freq) 1 else length(x))), X=lapply(if (discrete) lapply(x, function(xyl) as.integer(factor(xyl, levels=levels(factor(unlisted))))) else x, cut, breaks=brk.pts, right=FALSE))
 	blks <- make_blocks(x)
 
 	if (is.null(unlist(rhs))) {

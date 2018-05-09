@@ -1,5 +1,5 @@
 ---
-title: "Xyloplot examples"
+title: "xyloplot examples"
 author: "Daniel Greene"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -56,11 +56,20 @@ upper_qs <- sapply(data, function(sample) quantile(sample, prob=0.75))
 segments(x0=positions-1/n/2, x1=positions+1/n/2, y0=upper_qs, y1=upper_qs, col="red", pch=19)
 ```
 
-`xyloplot` also accepts an `rhs` argument, causing the xylophones to split in the middle, and plotting left hand side distributions `x` and right hand side ones from `rhs`.
+`xyloplot` accepts an `rhs` argument, causing the xylophones to split in the middle, and plotting left hand side distributions `x` and right hand side ones from `rhs`.  Note that graphical options, e.g. `col`, are recycled over the distributions going from left to right, regardless of whether they are lhs or rhs.
 
 ```{r}
-data_rhs <- lapply(2:4, function(mean) rnorm(mean=mean, sd=2, n=1000))
+data_rhs <- lapply(2:4, function(mean) rnorm(mean=mean, sd=2, n=2000))
 xyloplot(x=data, rhs=data_rhs, col=rainbow(2))
 ```
 
-Note that graphical options, e.g. `col`, are recycled over the distributions going from left to right, regardless of whether they are lhs or rhs.
+`xyloplot` accepts a `freq` argument. It is equivalent to the `freq` argument in `hist`: a logical value which if `FALSE` (default) makes the width of bars represent frequency densities, and if `TRUE`, makes the width of bars represent frequencies/counts. In the example below, note that the `rhs` object contains twice as many observations as the `lhs` object. Setting `freq` to `TRUE` will therefore mean that the right-hand side bars collectively occupy twice as much width as the left-hand side ones.
+
+```{r}
+lhs <- rnorm(n=1000)
+rhs <- rnorm(n=2000)
+par(mfrow=c(1, 2))
+xyloplot(main="freq=FALSE", x=lhs, rhs=rhs, col=rainbow(2), freq=FALSE)
+xyloplot(main="freq=TRUE", x=lhs, rhs=rhs, col=rainbow(2), freq=TRUE)
+```
+

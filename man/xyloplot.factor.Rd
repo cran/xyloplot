@@ -19,4 +19,3 @@ Function for creating xyloplots from factor vectors
 \seealso{
 xyloplot.list
 }
-

@@ -34,4 +34,3 @@ xyloplot(
 \seealso{
 xyloplot.list xyloplot.numeric
 }
-

@@ -19,4 +19,3 @@ Function for creating xyloplots from numeric vectors
 \seealso{
 xyloplot.list
 }
-

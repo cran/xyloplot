@@ -10,8 +10,8 @@
   else 30, ylim = if (discrete) {     range(breaks) } else {     if
   (length(breaks) == 1)          range(unlist(c(x, rhs), use.names = FALSE)) +
   c(-1, 1) * diff(range(unlist(c(x, rhs), use.names = FALSE)))/((breaks - 1) *
-  2)     else range(breaks) }, space = 0.1, ylab = "Value",
-  xlab = "Frequency density", ...)
+  2)     else range(breaks) }, space = 0.1, ylab = "Value", xlab = if
+  (freq) "Frequency" else "Frequency density", freq = FALSE, ...)
 }
 \arguments{
 \item{x}{List of numeric vectors of values.}
@@ -30,9 +30,10 @@
 
 \item{xlab}{Label for x-axis.}
 
+\item{freq}{Logical value. If \code{TRUE}, the frequencies/counts of data points falling in each interval are represented. If \code{FALSE} (default), the frequency density of data points in each interval are represented.}
+
 \item{...}{Other arguments to be passed to \code{\link{plot}}.}
 }
 \description{
 Function for creating multiple xyloplots sharing a y-axis from lists of numeric vectors
 }
-

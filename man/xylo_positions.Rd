@@ -12,4 +12,3 @@ xylo_positions(n)
 \description{
 Get x-axis positions of \code{n} xylophones
 }
-

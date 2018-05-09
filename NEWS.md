@@ -1,3 +1,7 @@
+# xyloplot 1.6
+
+Add `freq` argument which is equivalent to the `freq` argument in `hist`: if `FALSE` (default), frequency densities are represented; if `TRUE`, frequencies/counts are represented.
+
 # xyloplot 1.5
 
 Add `rhs` argument which, if specified, splits xyloplots in the middle, with left hand side distribution given by `x` and right hand side by `rhs`.
