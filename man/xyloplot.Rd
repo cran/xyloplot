@@ -2,35 +2,51 @@
 % Please edit documentation in R/functions.R
 \name{xyloplot}
 \alias{xyloplot}
-\title{Method for creating xyloplots}
+\alias{xyloplot.list}
+\alias{xyloplot.factor}
+\alias{xyloplot.logical}
+\alias{xyloplot.character}
+\alias{xyloplot.numeric}
+\title{Create a xyloplot}
 \usage{
-xyloplot(x, rhs = NULL, ...)
+xyloplot(x, ...)
+
+\method{xyloplot}{list}(x, breaks = NULL, space = 0.1, pivot = if
+  (!is.null(names(x))) factor(names(x), levels = names(x)) else
+  seq_along(x), pivot_labels = if (is.factor(pivot)) levels(pivot) else
+  NULL, just = 0.5, freq = FALSE, ...)
+
+\method{xyloplot}{factor}(x, ...)
+
+\method{xyloplot}{logical}(x, ...)
+
+\method{xyloplot}{character}(x, ...)
+
+\method{xyloplot}{numeric}(x, ...)
 }
 \arguments{
 \item{x}{Vector or list of vectors to use for creating xyloplots.}
 
-\item{rhs}{If not \code{NULL}, causes \code{xyloplot} to split xylophones and forms the distribution(s) for right hand side xylphones, complementary to the left hand side ones reflecting \code{x}.}
+\item{...}{Additional arguments passed to \code{\link{xyloplot.list}}, or other graphical parameters (e.g. \code{"col"}, \code{"lwd"}, ..., etc.) for \code{xyloplot.list} which are recycled along the xylophones and then used by functions for rendering the individual rectangles (e.g. \code{rect}).}
 
-\item{...}{Other arguments to be passed to \code{\link{xyloplot.list}} and \code{plot}.}
+\item{breaks}{A single positive integer value giving the number of breakpoints to use for an evenly spaced partition of the values in \code{x}, a numeric vector explicitly giving the the breakpoints, or \code{NULL} to use the default partition.}
+
+\item{space}{The proportion of the total distance on the pivots axis allocated to each 'xylophone' which should be empty or \code{NULL}, in which case the pivot axis coordinates for the xyloplot rectangles for each pivot are transformed to [0, 1].}
+
+\item{pivot}{Vector the same length as \code{x} used to determine which pivot to place the xylophone representing corresponding distributions of \code{x} onto (duplicated values go on the same pivots).}
+
+\item{pivot_labels}{Character vector giving names for each pivot or \code{NULL}.}
+
+\item{just}{Vector whose elements should take values in \code{0, 0.5, 1} which determines whether to centre-align the xylophones (\code{0.5}, default), left align them (\code{0}) or right align them (\code{1}).}
+
+\item{freq}{Logical value. If \code{TRUE}, the frequencies/counts of data points falling in each interval are represented. If \code{FALSE} (default), the frequency density of data points in each interval are represented.}
+}
+\value{
+Returns an object of class \code{"xyloplot"} containing the specification of graphical elements required to create a corresponding plot, including the coordinates of the corners of rectangles (in terms of the location on the value value axis and the pivot axis across which the xyloplots are spread) and the positions of the breakpoints used to partition the range of values.
 }
 \description{
-Plots xylophone(s) [essentially vertical histograms] for the input vector(s), provided either as a single vector or list of vectors. Either numeric vectors or character vectors/factors are admissible. If numeric vectors are provided, \code{cut} will be used to aggregate values, whereas if character vectors or factors are provided, each 'level' will get it's own `key'. Note, that the height of the plot/length of the level labels may need adjusting to fit. A second vector or list of vectors can be provided as the \code{rhs} argument. If so, `split' xyloplots are created, with the left hand sides corresponding to distributions in \code{x} and right hand sides corresponding to distributions in \code{rhs}. Note that if \code{rhs} is not null, it must have the same class as \code{x}, and if it is a \code{list}, it must be the same length as \code{x} and it's elements must be the same class as those in \code{x}.
-}
-\examples{
-xyloplot(rnorm(1000))
-xyloplot(
- x=lapply(1:3, function(mean) rnorm(mean=mean, n=1000)), 
- breaks=20,
- col=rainbow(3), 
- main="title")
-xyloplot(
- replicate(n=5, simplify=FALSE, 
-  expr=factor(sample(c(0.01, 0.1, 0.2, 0.25, 0.5, 1), size=10, replace=TRUE))), 
- col=rainbow(5))
-xyloplot(
- sample(c("goldfish","cat","dog","fish","mouse","giraffe"), 
- size=100, replace=TRUE))
+Plots xylophones (centre-aligned histograms) for the input vector(s), provided either as a single vector or list of vectors. Numeric vectors and factors are admissible (character vectors are transformed to factors). If numeric vectors are provided, \code{cut} will be used to aggregate values, whereas if character vectors or factors are provided, each 'level' will have it's own `key' on the `xylophone'. Note that if factors are used, all factors in `x` must have identical levels.
 }
 \seealso{
-xyloplot.list xyloplot.numeric
+\code{\link{plot.xyloplot}}
 }

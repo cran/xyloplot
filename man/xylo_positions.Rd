@@ -2,13 +2,13 @@
 % Please edit documentation in R/functions.R
 \name{xylo_positions}
 \alias{xylo_positions}
-\title{Get x-axis positions of \code{n} xylophones}
+\title{Get x-axis positions for \code{n} xylophones}
 \usage{
 xylo_positions(n)
 }
 \arguments{
-\item{n}{Number of xylophones}
+\item{n}{Number of xylophones.}
 }
 \description{
-Get x-axis positions of \code{n} xylophones
+Get x-axis positions for \code{n} xylophones
 }

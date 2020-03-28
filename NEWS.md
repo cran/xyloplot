@@ -1,3 +1,7 @@
+# xyloplot 2.0
+
+Breaking changes introduced, including that now the argument `discrete` is obsolete (so that it is now up to the user to use convert input to factors to use a discrete scale), and the function `xyloplot` returns xyloplot objects (`plot.xyloplot` must now be called on these objects in order to pass arguments to `plot`). Now multiple xyloplots can be placed on the same pivot, and more control over output is allowed through setting the justification for each histogram individually.
+
 # xyloplot 1.6
 
 Add `freq` argument which is equivalent to the `freq` argument in `hist`: if `FALSE` (default), frequency densities are represented; if `TRUE`, frequencies/counts are represented.
